@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ДЗ без стресса — Альберт</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #172033;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background: white;
+  border-right: 1px solid #e5e7ef;
+  padding: 25px 15px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  padding: 10px;
+}
+
+.logo span {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  background: #635bff;
+  color: white;
+  border-radius: 12px;
+  margin-right: 8px;
+}
+
+.nav button {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 14px;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #596174;
+}
+
+.nav button:hover,
+.nav button.active {
+  background: #efedff;
+  color: #635bff;
+}
+
+.main {
+  flex: 1;
+  max-width: 1250px;
+  margin: auto;
+  padding: 30px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.top h1 {
+  margin: 4px 0 0;
+}
+
+.date {
+  background: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  color: #666;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.4fr .8fr;
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 22px;
+  padding: 22px;
+  border: 1px solid #e6e8ef;
+  box-shadow: 0 10px 30px rgba(30,40,80,.07);
+}
+
+.hero {
+  background: linear-gradient(135deg, #625af2, #9164f5);
+  color: white;
+}
+
+.hero h2 {
+  font-size: 30px;
+  margin-top: 0;
+}
+
+.hero p {
+  line-height: 1.5;
+}
+
+.goal {
+  background: rgba(255,255,255,.15);
+  padding: 16px;
+  border-radius: 15px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.alice {
+  margin-top: 18px;
+  background: white;
+  color: #172033;
+  border-radius: 18px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.alice-device {
+  width: 100px;
+  height: 90px;
+  position: relative;
+}
+
+.alice-screen {
+  position: absolute;
+  top: 0;
+  left: 15px;
+  width: 70px;
+  height: 53px;
+  background: #252b4a;
+  border: 4px solid #171b32;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 22px;
+}
+
+.alice-base {
+  position: absolute;
+  bottom: 5px;
+  width: 100px;
+  height: 32px;
+  background: linear-gradient(#f4f5f8,#c5cbd6);
+  border-radius: 10px 10px 17px 17px;
+}
+
+.subjects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.subject {
+  background: #f2f3f8;
+  border: 1px solid #e1e4ec;
+  padding: 10px 13px;
+  border-radius: 13px;
+  font-weight: bold;
+}
+
+.subject small {
+  display: block;
+  color: #777;
+  margin-top: 4px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.form .full {
+  grid-column: 1 / -1;
+}
+
+input, select {
+  padding: 13px;
+  border: 1px solid #dfe2eb;
+  border-radius: 12px;
+  outline: none;
+  background: white;
+}
+
+input:focus, select:focus {
+  border-color: #635bff;
+}
+
+.primary {
+  border: 0;
+  background: #635bff;
+  color: white;
+  border-radius: 12px;
+  padding: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.secondary {
+  border: 1px solid #dddfea;
+  background: white;
+  border-radius: 12px;
+  padding: 11px 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.list {
+  margin-top: 18px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #e5e7ee;
+  padding: 13px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+}
+
+.item.done {
+  opacity: .5;
+  text-decoration: line-through;
+}
+
+.item-main {
+  flex: 1;
+}
+
+.item-title {
+  font-weight: bold;
+}
+
+.meta {
+  font-size: 13px;
+  color: #777;
+  margin-top: 4px;
+}
+
+.delete {
+  border: 0;
+  background: #fff0f1;
+  color: #d9414d;
+  padding: 8px 10px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.schedule {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.day {
+  min-width: 145px;
+  background: #fafbfe;
+  border: 1px solid #e1e4ec;
+  border-radius: 15px;
+  padding: 12px;
+}
+
+.day h4 {
+  margin: 0 0 10px;
+}
+
+.lesson {
+  background: white;
+  border: 1px solid #e1e4ec;
+  padding: 9px;
+  border-radius: 10px;
+  margin-top: 7px;
+  font-size: 13px;
+}
+
+.lesson button {
+  float: right;
+  border: 0;
+  background: transparent;
+  color: #999;
+  cursor: pointer;
+}
+
+.checker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.upload {
+  border: 2px dashed #cdd1dd;
+  padding: 30px;
+  border-radius: 18px;
+  text-align: center;
+  background: #fafbff;
+}
+
+.preview {
+  display: none;
+  max-width: 100%;
+  max-height: 300px;
+  margin-top: 15px;
+  border-radius: 15px;
+}
+
+.result {
+  background: #f5f6fa;
+  border: 1px solid #e1e4ec;
+  border-radius: 16px;
+  padding: 18px;
+  min-height: 150px;
+}
+
+.progress {
+  height: 10px;
+  background: #e9ebf1;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.bar {
+  height: 100%;
+  width: 0;
+  background: #635bff;
+}
+
+@media(max-width:900px) {
+  .sidebar {
+    width: 80px;
+  }
+
+  .logo strong,
+  .nav span {
+    display: none;
+  }
+
+  .grid,
+  .checker {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media(max-width:600px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main {
+    padding: 15px;
+  }
+
+  .form {
+    grid-template-columns: 1fr;
+  }
+
+  .form .full {
+    grid-column: auto;
+  }
+
+  .top h1 {
+    font-size: 23px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+
+<div class="logo">
+<span>✓</span>
+<strong>ДЗ без стресса</strong>
+</div>
+
+<div class="nav">
+
+<button class="active" onclick="showTab('home',this)">
+🏠 <span>Главная</span>
+</button>
+
+<button onclick="showTab('schedule',this)">
+📅 <span>Расписание</span>
+</button>
+
+<button onclick="showTab('homework',this)">
+📚 <span>Домашка</span>
+</button>
+
+<button onclick="showTab('checker',this)">
+📷 <span>Проверка работы</span>
+</button>
+
+</div>
+</aside>
+
+<main class="main">
+
+<div class="top">
+<div>
+<div style="color:#777">Личный кабинет</div>
+<h1>Привет, Альберт 👋</h1>
+</div>
+
+<div class="date" id="date"></div>
+</div>
+
+
+<!-- ГЛАВНАЯ -->
+
+<section id="home" class="section active">
+
+<div class="grid">
+
+<div class="card hero">
+
+<h2>
+Ты же хочешь получить Алису с экраном? 🔥
+</h2>
+
+<p>
+Сделай домашнее задание сегодня и приблизься к своей цели.
+Не откладывай всё на последний момент!
+</p>
+
+<div class="goal">
+🎯 Цель Альберта: получить Алису с экраном
+</div>
+
+<div class="alice">
+
+<div class="alice-device">
+
+<div class="alice-screen">
+◕‿◕
+</div>
+
+<div class="alice-base"></div>
+
+</div>
+
+<div>
+<b>Алиса с экраном</b>
+<br>
+<small>
+Твоя цель — осталось только выполнить домашку!
+</small>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>🎒 Завтра в школе</h3>
+
+<p id="tomorrowName"></p>
+
+<div id="tomorrowSubjects" class="subjects"></div>
+
+<p style="color:#777;font-size:13px">
+Подготовь портфель заранее.
+</p>
+
+<button class="secondary"
+onclick="showTab('schedule',document.querySelectorAll('.nav button')[1])">
+Изменить расписание
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>📚 Ближайшая домашка</h3>
+
+<div id="homeworkPreview"></div>
+
+</div>
+
+
+<div class="card">
+
+<h3>🏆 Прогресс</h3>
+
+<div id="progressText">
+0 из 0 выполнено
+</div>
+
+<div class="progress">
+<div class="bar" id="progressBar"></div>
+</div>
+
+<p id="progressPercent">0%</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- РАСПИСАНИЕ -->
+
+<section id="schedule" class="section">
+
+<div class="card">
+
+<h2>📅 Расписание на неделю</h2>
+
+<p style="color:#777">
+Добавь предметы и время уроков.
+</p>
+
+<div class="form">
+
+<select id="daySelect">
+<option>Понедельник</option>
+<option>Вторник</option>
+<option>Среда</option>
+<option>Четверг</option>
+<option>Пятница</option>
+<option>Суббота</option>
+<option>Воскресенье</option>
+</select>
+
+<input id="timeInput" type="time" value="08:30">
+
+<input
+id="subjectInput"
+placeholder="Например: Математика">
+
+<button class="primary" onclick="addLesson()">
+Добавить урок
+</button>
+
+</div>
+
+<div id="scheduleGrid" class="schedule"></div>
+
+</div>
+
+</section>
+
+
+<!-- ДОМАШКА -->
+
+<section id="homework" class="section">
+
+<div class="card">
+
+<h2>📚 Домашние задания</h2>
+
+<p style="color:#777">
+Добавляй задания и дату, к которой их нужно сделать.
+</p>
+
+<div class="form">
+
+<input
+id="hwSubject"
+placeholder="Предмет">
+
+<input
+id="hwDate"
+type="date">
+
+<input
+id="hwTitle"
+class="full"
+placeholder="Например: решить упражнения 12–14">
+
+<button class="primary" onclick="addHomework()">
+Добавить домашнее задание
+</button>
+
+</div>
+
+<div id="hwList" class="list"></div>
+
+</div>
+
+</section>
+
+
+<!-- ПРОВЕРКА -->
+
+<section id="checker" class="section">
+
+<div class="card">
+
+<h2>📷 Проверка домашней работы</h2>
+
+<p style="color:#777">
+Сфотографируй свою работу и загрузи фотографию.
+</p>
+
+<div class="checker">
+
+<div>
+
+<div class="upload">
+
+<b>
+📸 Загрузить фотографию
+</b>
+
+<p style="color:#777">
+Выбери фотографию домашней работы.
+</p>
+
+<input
+id="workPhoto"
+type="file"
+accept="image/*">
+
+<img
+id="photoPreview"
+class="preview">
+
+</div>
+
+<select
+id="checkSubject"
+style="width:100%;margin-top:10px">
+
+<option>Математика</option>
+<option>Русский язык</option>
+<option>Английский язык</option>
+<option>Физика</option>
+<option>Литература</option>
+<option>Другое</option>
+
+</select>
+
+<button
+class="primary"
+style="width:100%;margin-top:10px"
+onclick="checkWork()">
+
+🔎 Проверить работу
+
+</button>
+
+</div>
+
+
+<div>
+
+<div id="checkResult" class="result">
+
+После загрузки фотографии
+нажми «Проверить работу».
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<script>
+
+const STORAGE_KEY = "albert_homework_site";
+
+let state = {
+
+schedule: {
+"Понедельник": [
+{time:"08:30",subject:"Математика"},
+{time:"09:25",subject:"Русский язык"},
+{time:"10:20",subject:"История"}
+],
+
+"Вторник": [
+{time:"08:30",subject:"Физика"},
+{time:"09:25",subject:"Английский язык"},
+{time:"10:20",subject:"Литература"}
+],
+
+"Среда": [
+{time:"08:30",subject:"Математика"},
+{time:"09:25",subject:"Биология"}
+],
+
+"Четверг": [
+{time:"08:30",subject:"Русский язык"},
+{time:"09:25",subject:"Обществознание"},
+{time:"10:20",subject:"Физика"}
+],
+
+"Пятница": [
+{time:"08:30",subject:"Английский язык"},
+{time:"09:25",subject:"История"}
+],
+
+"Суббота": [],
+"Воскресенье": []
+},
+
+homework: []
+
+};
+
+
+function save() {
+
+try {
+
+localStorage.setItem(
+STORAGE_KEY,
+JSON.stringify(state)
+);
+
+} catch(e) {}
+
+}
+
+
+function load() {
+
+try {
+
+let saved =
+localStorage.getItem(STORAGE_KEY);
+
+if(saved) {
+
+state = JSON.parse(saved);
+
+}
+
+} catch(e) {}
+
+}
+
+
+function showTab(id,button) {
+
+document
+.querySelectorAll(".section")
+.forEach(section => {
+
+section.classList.remove("active");
+
+});
+
+document
+.getElementById(id)
+.classList.add("active");
+
+
+document
+.querySelectorAll(".nav button")
+.forEach(btn => {
+
+btn.classList.remove("active");
+
+});
+
+
+if(button) {
+
+button.classList.add("active");
+
+}
+
+renderAll();
+
+}
+
+
+function addLesson() {
+
+let day =
+document.getElementById("daySelect").value;
+
+let time =
+document.getElementById("timeInput").value;
+
+let subject =
+document.getElementById("subjectInput").value.trim();
+
+
+if(!subject) {
+
+alert("Напиши название предмета.");
+
+return;
+
+}
+
+
+if(!state.schedule[day]) {
+
+state.schedule[day] = [];
+
+}
+
+
+state.schedule[day].push({
+
+time: time,
+subject: subject
+
+});
+
+
+document.getElementById("subjectInput").value = "";
+
+save();
+
+renderAll();
+
+}
+
+
+function deleteLesson(day,index) {
+
+state.schedule[day].splice(index,1);
+
+save();
+
+renderAll();
+
+}
+
+
+function renderSchedule() {
+
+let days = [
+
+"Понедельник",
+"Вторник",
+"Среда",
+"Четверг",
+"Пятница",
+"Суббота",
+"Воскресенье"
+
+];
+
+
+let html = "";
+
+
+days.forEach(day => {
+
+let lessons =
+state.schedule[day] || [];
+
+lessons.sort((a,b) =>
+a.time.localeCompare(b.time)
+);
+
+
+html += `
+<div class="day">
+
+<h4>${day}</h4>
+`;
+
+
+if(lessons.length === 0) {
+
+html +=
+`<span style="color:#888;font-size:13px">
+Нет уроков
+</span>`;
+
+}
+
+
+lessons.forEach((lesson,index) => {
+
+html += `
+
+<div class="lesson">
+
+<button
+onclick="deleteLesson('${day}',${index})">
+
+×
+</button>
+
+<b>${lesson.time}</b>
+<br>
+
+${escapeHtml(lesson.subject)}
+
+</div>
+
+`;
+
+});
+
+
+html += "</div>";
+
+});
+
+
+document.getElementById("scheduleGrid").innerHTML =
+html;
+
+}
+
+
+function addHomework() {
+
+let subject =
+document.getElementById("hwSubject").value.trim();
+
+let title =
+document.getElementById("hwTitle").value.trim();
+
+let date =
+document.getElementById("hwDate").value;
+
+
+if(!subject || !title || !date) {
+
+alert("Заполни предмет, задание и дату.");
+
+return;
+
+}
+
+
+state.homework.push({
+
+id: Date.now(),
+
+subject: subject,
+
+title: title,
+
+date: date,
+
+done: false
+
+});
+
+
+document.getElementById("hwSubject").value = "";
+
+document.getElementById("hwTitle").value = "";
+
+save();
+
+renderAll();
+
+}
+
+
+function toggleHomework(id) {
+
+let homework =
+state.homework.find(x => x.id === id);
+
+if(homework) {
+
+homework.done =
+!homework.done;
+
+}
+
+save();
+
+renderAll();
+
+}
+
+
+function deleteHomework(id) {
+
+state.homework =
+state.homework.filter(x => x.id !== id);
+
+save();
+
+renderAll();
+
+}
+
+
+function formatDate(date) {
+
+let d =
+new Date(date + "T00:00:00");
+
+return d.toLocaleDateString(
+"ru-RU",
+{
+day:"2-digit",
+month:"2-digit",
+year:"numeric"
+}
+);
+
+}
+
+
+function renderHomework() {
+
+let list =
+state.homework.slice()
+.sort((a,b) =>
+a.date.localeCompare(b.date)
+);
+
+
+let html = "";
+
+
+if(list.length === 0) {
+
+html = `
+<div style="padding:20px;color:#777;text-align:center">
+Пока нет домашних заданий.
+</div>
+`;
+
+}
+
+
+list.forEach(hw => {
+
+html += `
+
+<div class="item ${hw.done ? "done" : ""}">
+
+<input
+type="checkbox"
+${hw.done ? "checked" : ""}
+onchange="toggleHomework(${hw.id})">
+
+<div class="item-main">
+
+<div class="item-title">
+
+${escapeHtml(hw.subject)}
+
+</div>
+
+<div>
+
+${escapeHtml(hw.title)}
+
+</div>
+
+<div class="meta">
+
+Сдать: ${formatDate(hw.date)}
+
+</div>
+
+</div>
+
+<button
+class="delete"
+onclick="deleteHomework(${hw.id})">
+
+Удалить
+
+</button>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("hwList").innerHTML =
+html;
+
+}
+
+
+function renderHome() {
+
+let total =
+state.homework.length;
+
+let done =
+state.homework.filter(x => x.done).length;
+
+let percent =
+total === 0
+? 0
+: Math.round(done / total * 100);
+
+
+document.getElementById("progressText")
+.textContent =
+`${done} из ${total} выполнено`;
+
+document.getElementById("progressPercent")
+.textContent =
+percent + "%";
+
+document.getElementById("progressBar")
+.style.width =
+percent + "%";
+
+
+let upcoming =
+state.homework
+.filter(x => !x.done)
+.sort((a,b) =>
+a.date.localeCompare(b.date)
+)
+.slice(0,5);
+
+
+let html = "";
+
+
+if(upcoming.length === 0) {
+
+html = `
+<div style="color:#777">
+Все задания выполнены 🎉
+</div>
+`;
+
+}
+
+
+upcoming.forEach(hw => {
+
+html += `
+
+<div class="item">
+
+<div class="item-main">
+
+<div class="item-title">
+${escapeHtml(hw.subject)}
+</div>
+
+<div>
+${escapeHtml(hw.title)}
+</div>
+
+<div class="meta">
+До ${formatDate(hw.date)}
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("homeworkPreview")
+.innerHTML = html;
+
+}
+
+
+function getTomorrow() {
+
+let tomorrow =
+new Date();
+
+tomorrow.setDate(
+tomorrow.getDate() + 1
+);
+
+let day =
+tomorrow.getDay();
+
+let days = [
+
+"Воскресенье",
+"Понедельник",
+"Вторник",
+"Среда",
+"Четверг",
+"Пятница",
+"Суббота"
+
+];
+
+return days[day];
+
+}
+
+
+function renderTomorrow() {
+
+let day =
+getTomorrow();
+
+document.getElementById("tomorrowName")
+textContent = day;
+
+
+let lessons =
+state.schedule[day] || [];
+
+
+lessons.sort((a,b) =>
+a.time.localeCompare(b.time)
+);
+
+
+let html = "";
+
+
+if(lessons.length === 0) {
+
+html =
+"<div style='color:#777'>Нет уроков</div>";
+
+}
+
+
+lessons.forEach(lesson => {
+
+html += `
+
+<div class="subject">
+
+${escapeHtml(lesson.subject)}
+
+<small>
+${lesson.time}
+</small>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("tomorrowSubjects")
+.innerHTML = html;
+
+}
+
+
+function previewPhoto(event) {
+
+let file =
+event.target.files[0];
+
+let image =
+document.getElementById("photoPreview");
+
+
+if(!file) {
+
+image.style.display = "none";
+
+return;
+
+}
+
+
+let reader =
+new FileReader();
+
+
+reader.onload = function(e) {
+
+image.src =
+e.target.result;
+
+image.style.display =
+"block";
+
+};
+
+
+reader.readAsDataURL(file);
+
+}
+
+
+function checkWork() {
+
+let file =
+document.getElementById("workPhoto")
+.files[0];
+
+let subject =
+document.getElementById("checkSubject")
+.value;
+
+let result =
+document.getElementById("checkResult");
+
+
+if(!file) {
+
+result.innerHTML = `
+
+<b>❗ Сначала загрузи фотографию</b>
+
+<p>
+Сфотографируй домашнюю работу
+и выбери фотографию.
+</p>
+
+`;
+
+return;
+
+}
+
+
+result.innerHTML = `
+
+<b>🔎 Проверяем работу...</b>
+
+<p>
+Предмет: ${escapeHtml(subject)}
+</p>
+
+`;
+
+
+setTimeout(function() {
+
+result.innerHTML = `
+
+<b>✅ Фотография получена!</b>
+
+<p>
+Работа загружена и готова к проверке.
+</p>
+
+<hr>
+
+<b>🤖 В полной версии здесь будет ИИ:</b>
+
+<ul>
+
+<li>распознает текст на фотографии;</li>
+
+<li>найдёт ошибки;</li>
+
+<li>покажет место ошибки;</li>
+
+<li>объяснит, почему ответ неправильный;</li>
+
+<li>подскажет правильный способ решения.</li>
+
+</ul>
+
+<p style="color:#777">
+
+Сейчас это демонстрационная версия
+проверки. Для настоящего анализа фотографии
+нужно подключить ИИ-сервис к серверу.
+
+</p>
+
+`;
+
+},1000);
+
+}
+
+
+function escapeHtml(text) {
+
+return String(text).replace(
+/[&<>"']/g,
+function(match) {
+
+let chars = {
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+};
+
+return chars[match];
+
+});
+
+}
+
+
+function renderAll() {
+
+renderSchedule();
+
+renderHomework();
+
+renderHome();
+
+renderTomorrow();
+
+}
+
+
+let today =
+new Date();
+
+document.getElementById("date")
+.textContent =
+today.toLocaleDateString(
+"ru-RU",
+{
+weekday:"long",
+day:"numeric",
+month:"long"
+}
+);
+
+
+let tomorrow =
+new Date();
+
+tomorrow.setDate(
+tomorrow.getDate() + 1
+);
+
+document.getElementById("hwDate")
+.value =
+tomorrow.toISOString().slice(0,10);
+
+
+document.getElementById("workPhoto")
+.addEventListener(
+"change",
+previewPhoto
+);
+
+
+load();
+
+renderAll();
+
+</script>
+
+</body>
+</html>
