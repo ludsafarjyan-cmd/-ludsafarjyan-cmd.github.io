@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ДЗ без стресса — Альберт</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --text:#172033;
+  --muted:#6d7485;
+  --primary:#635bff;
+  --primary2:#8b5cf6;
+  --line:#e7eaf1;
+  --good:#16a36a;
+  --danger:#e14d5a;
+  --shadow:0 14px 35px rgba(33,43,77,.08);
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  min-height:100vh;
+  display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:245px;
+  min-height:100vh;
+  background:white;
+  border-right:1px solid var(--line);
+  padding:24px 16px;
+  position:sticky;
+  top:0;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:19px;
+  font-weight:900;
+  padding:8px 12px 24px;
+}
+
+.brand-icon{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  color:white;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+}
+
+.nav{
+  display:grid;
+  gap:7px;
+}
+
+.nav button{
+  border:0;
+  background:transparent;
+  color:#596174;
+  text-align:left;
+  padding:13px 14px;
+  border-radius:14px;
+  font-weight:800;
+}
+
+.nav button:hover,
+.nav button.active{
+  background:#f0efff;
+  color:var(--primary);
+}
+
+/* MAIN */
+
+.main{
+  width:100%;
+  max-width:1250px;
+  margin:auto;
+  padding:28px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:22px;
+}
+
+.top h1{
+  margin:0;
+  font-size:30px;
+}
+
+.badge{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:9px 13px;
+  font-weight:800;
+  color:#596174;
+}
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+/* CARDS */
+
+.card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  padding:22px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1.45fr .85fr;
+  gap:20px;
+}
+
+/* HERO */
+
+.hero{
+  background:linear-gradient(135deg,#645cf4,#8f62f4);
+  color:white;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero h2{
+  margin:0 0 12px;
+  font-size:30px;
+  line-height:1.1;
+}
+
+.hero p{
+  margin:0;
+  color:#eeeeff;
+  line-height:1.5;
+}
+
+.goal{
+  margin-top:20px;
+  padding:15px;
+  border-radius:16px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.2);
+  font-weight:800;
+}
+
+.alice{
+  margin-top:18px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  background:white;
+  color:var(--text);
+  padding:12px;
+  border-radius:18px;
+}
+
+.alice-photo{
+  width:150px;
+  height:105px;
+  border-radius:14px;
+  background:linear-gradient(145deg,#eef1ff,#dfe4ff);
+  display:grid;
+  place-items:center;
+}
+
+.alice-device{
+  width:76px;
+  height:76px;
+  position:relative;
+}
+
+.alice-screen{
+  position:absolute;
+  top:4px;
+  left:7px;
+  width:62px;
+  height:49px;
+  border-radius:13px;
+  border:3px solid #222744;
+  background:linear-gradient(145deg,#161b35,#38427b);
+  display:grid;
+  place-items:center;
+}
+
+.alice-face{
+  color:white;
+  font-size:19px;
+  font-weight:900;
+}
+
+.alice-base{
+  position:absolute;
+  left:0;
+  bottom:5px;
+  width:76px;
+  height:24px;
+  border-radius:8px 8px 14px 14px;
+  background:linear-gradient(180deg,#eef0f5,#c9ced9);
+}
+
+/* ACTIONS */
+
+.action-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  margin-top:20px;
+}
+
+.action-tile{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:var(--shadow);
+  cursor:pointer;
+}
+
+.action-tile:hover{
+  border-color:#c9c5ff;
+  transform:translateY(-2px);
+}
+
+.action-icon{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  background:#f0efff;
+  display:grid;
+  place-items:center;
+  font-size:24px;
+  margin-bottom:12px;
+}
+
+.action-tile h3{
+  margin:0 0 6px;
+}
+
+.action-tile p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.4;
+}
+
+.action-arrow{
+  float:right;
+  color:var(--primary);
+  font-size:22px;
+}
+
+/* TEXT */
+
+h3{
+  margin:0 0 14px;
+}
+
+.muted{
+  color:var(--muted);
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+/* TOMORROW */
+
+.tomorrow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+}
+
+.subject{
+  padding:10px 13px;
+  background:#f4f5fa;
+  border:1px solid var(--line);
+  border-radius:13px;
+  font-weight:800;
+}
+
+.subject span{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+/* BUTTONS */
+
+.primary{
+  border:0;
+  background:var(--primary);
+  color:white;
+  padding:12px 16px;
+  border-radius:13px;
+  font-weight:850;
+}
+
+.secondary{
+  border:1px solid var(--line);
+  background:white;
+  color:var(--text);
+  padding:11px 15px;
+  border-radius:13px;
+  font-weight:800;
+}
+
+.home-button{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid #d9d3ff;
+  background:#f3f1ff;
+  color:#5b4bd8;
+  border-radius:12px;
+  padding:10px 15px;
+  font-weight:850;
+  margin-bottom:16px;
+}
+
+.home-button:hover{
+  background:#e9e6ff;
+}
+
+/* HOMEWORK */
+
+.list{
+  display:grid;
+  gap:10px;
+  margin-top:15px;
+}
+
+.item{
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:13px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.item.done{
+  opacity:.55;
+}
+
+.item.done .title{
+  text-decoration:line-through;
+}
+
+.check{
+  width:21px;
+  height:21px;
+  accent-color:var(--primary);
+}
+
+.item-main{
+  flex:1;
+}
+
+.title{
+  font-weight:850;
+}
+
+.meta{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
+.danger{
+  border:0;
+  background:#fff0f1;
+  color:var(--danger);
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+}
+
+.empty{
+  padding:25px;
+  text-align:center;
+  color:var(--muted);
+  border:1px dashed #d8dce5;
+  border-radius:15px;
+}
+
+/* REWARDS */
+
+.record-card{
+  margin-top:20px;
+  background:#ecfbf4;
+  border-color:#b9edd6;
+}
+
+.record-number{
+  font-size:29px;
+  font-weight:900;
+}
+
+/* FORMS */
+
+.form{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+input,
+select{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid #dfe3eb;
+  border-radius:13px;
+  background:white;
+  color:var(--text);
+}
+
+/* SCHEDULE */
+
+.schedule-toolbar{
+  display:flex;
+  gap:8px;
+  margin:18px 0 16px;
+}
+
+.schedule-tab{
+  border:1px solid var(--line);
+  background:white;
+  color:#596174;
+  border-radius:12px;
+  padding:10px 14px;
+  font-weight:800;
+}
+
+.schedule-tab.active{
+  background:#f0efff;
+  color:var(--primary);
+  border-color:#d9d3ff;
+}
+
+.schedule-days{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:8px;
+  overflow:auto;
+}
+
+.schedule-day-btn{
+  min-width:105px;
+  border:1px solid var(--line);
+  background:white;
+  border-radius:14px;
+  padding:11px;
+  font-weight:850;
+}
+
+.schedule-day-btn.active{
+  background:#f0efff;
+  color:var(--primary);
+  border-color:#d9d3ff;
+}
+
+.schedule-day-btn small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:4px;
+}
+
+.selected-day-schedule{
+  margin-top:18px;
+}
+
+.selected-day-title{
+  font-size:20px;
+  font-weight:900;
+}
+
+.selected-lesson{
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  margin-top:10px;
+  background:white;
+}
+
+.lesson-info{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.lesson-time{
+  color:var(--primary);
+  font-weight:900;
+}
+
+.lesson-actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.edit-btn,
+.delete-btn{
+  border:0;
+  border-radius:9px;
+  padding:8px 10px;
+}
+
+.edit-btn{
+  background:#f4f5fa;
+}
+
+.delete-btn{
+  background:#fff0f1;
+  color:var(--danger);
+}
+
+.schedule-homework-btn{
+  margin-top:10px;
+  border:1px solid #d9d3ff;
+  background:#f3f0ff;
+  color:#5b4bd8;
+  border-radius:10px;
+  padding:9px 11px;
+  font-size:12px;
+  font-weight:850;
+}
+
+.attached-homework{
+  color:var(--good);
+  font-size:12px;
+  margin-top:7px;
+  font-weight:800;
+}
+
+/* CHECKER */
+
+.checker{
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:20px;
+}
+
+.drop{
+  border:2px dashed #cfd3df;
+  border-radius:18px;
+  padding:26px;
+  text-align:center;
+  background:#fafbff;
+}
+
+.preview{
+  max-width:100%;
+  max-height:320px;
+  margin-top:14px;
+  border-radius:16px;
+  display:none;
+}
+
+.result{
+  margin-top:14px;
+  border-radius:16px;
+  padding:15px;
+  background:#f7f8fb;
+  border:1px solid var(--line);
+  line-height:1.5;
+}
+
+.result.ok{
+  background:#ecfbf4;
+  border-color:#b9edd6;
+}
+
+.result.error{
+  background:#fff2f3;
+  border-color:#ffd0d5;
+}
+
+/* WIDE CARDS */
+
+.wide-card{
+  max-width:1194px;
+  margin:20px auto 0;
+  background:white;
+  border:1px solid var(--line);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  padding:18px 20px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  cursor:pointer;
+}
+
+.wide-icon{
+  width:50px;
+  height:50px;
+  border-radius:15px;
+  background:#f0efff;
+  display:grid;
+  place-items:center;
+  font-size:25px;
+}
+
+/* MODAL */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(20,25,45,.48);
+  padding:20px;
+  overflow:auto;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(720px,100%);
+  background:white;
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 25px 70px rgba(20,25,45,.25);
+}
+
+.close{
+  float:right;
+  width:36px;
+  height:36px;
+  border:0;
+  background:#f3f4f8;
+  border-radius:10px;
+  font-size:20px;
+}
+
+/* GAMES */
+
+.games-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
+  margin-top:16px;
+}
+
+.game-card{
+  border:1px solid #e7e3ff;
+  border-radius:16px;
+  padding:14px;
+  background:#faf9ff;
+  text-align:center;
+}
+
+.game-placeholder{
+  height:85px;
+  border-radius:12px;
+  background:#f0edff;
+  display:grid;
+  place-items:center;
+  font-size:40px;
+}
+
+.game-card h3{
+  margin:10px 0 4px;
+  font-size:15px;
+}
+
+.game-card p{
+  color:#777;
+  font-size:12px;
+}
+
+.game-card button{
+  border:0;
+  background:var(--primary);
+  color:white;
+  border-radius:10px;
+  padding:9px 13px;
+  font-weight:800;
+}
+
+.game-card button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .sidebar{
+    width:82px;
+  }
+
+  .brand strong,
+  .nav button span{
+    display:none;
+  }
+
+  .brand{
+    justify-content:center;
+  }
+
+  .grid,
+  .checker{
+    grid-template-columns:1fr;
+  }
+
+  .schedule-days{
+    grid-template-columns:repeat(7,120px);
+  }
+}
+
+@media(max-width:650px){
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    padding:16px;
+  }
+
+  .top h1{
+    font-size:24px;
+  }
+
+  .form{
+    grid-template-columns:1fr;
+  }
+
+  .action-grid{
+    grid-template-columns:1fr;
+  }
+
+  .alice-photo{
+    width:110px;
+    height:90px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+  <!-- ЛЕВОЕ МЕНЮ -->
+
+  <aside class="sidebar">
+
+    <div class="brand">
+
+      <div class="brand-icon">
+        ✓
+      </div>
+
+      <strong>
+        ДЗ без стресса
+      </strong>
+
+    </div>
+
+
+    <div class="nav">
+
+      <button
+        class="active"
+        data-tab="home">
+
+        🏠
+        <span>Главная</span>
+
+      </button>
+
+
+      <button
+        data-tab="schedule">
+
+        📅
+        <span>Расписание</span>
+
+      </button>
+
+
+      <button
+        data-tab="homework">
+
+        📚
+        <span>Домашнее задание</span>
+
+      </button>
+
+
+      <button
+        data-tab="checker">
+
+        📷
+        <span>Проверка работы</span>
+
+      </button>
+
+    </div>
+
+  </aside>
+
+
+
+  <!-- ОСНОВНОЙ КОНТЕНТ -->
+
+  <main class="main">
+
+
+    <div class="top">
+
+      <div>
+
+        <div class="muted">
+          Личный кабинет
+        </div>
+
+        <h1>
+          Привет, Альберт 👋
+        </h1>
+
+      </div>
+
+
+      <div
+        class="badge"
+        id="todayBadge">
+      </div>
+
+    </div>
+
+
+
+    <!-- ГЛАВНАЯ -->
+
+    <section
+      id="home"
+      class="section active">
+
+
+      <div class="grid">
+
+
+        <!-- HERO -->
+
+        <div class="card hero">
+
+          <h2>
+            Ты же хочешь получить Алису с экраном? 🔥
+          </h2>
+
+          <p>
+            Сделай домашку сегодня —
+            и приблизься к своей цели.
+            Маленькие шаги каждый день
+            работают лучше, чем всё
+            откладывать на вечер.
+          </p>
+
+
+          <div class="goal">
+
+            🎯 Цель Альберта:
+            получить Алису с экраном
+
+          </div>
+
+
+          <div class="alice">
+
+            <div class="alice-photo">
+
+              <div class="alice-device">
+
+                <div class="alice-screen">
+                  <div class="alice-face">
+                    ◕‿◕
+                  </div>
+                </div>
+
+                <div class="alice-base"></div>
+
+              </div>
+
+            </div>
+
+
+            <div>
+
+              <b>
+                Алиса с экраном
+              </b>
+
+              <br>
+
+              <small>
+                Твоя цель 🎯
+              </small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ЗАВТРА -->
+
+        <div class="card">
+
+          <div class="row">
+
+            <div>
+
+              <h3>
+                Завтра в школе
+              </h3>
+
+            </div>
+
+            <span
+              class="badge"
+              id="tomorrowName">
+            </span>
+
+          </div>
+
+
+          <div
+            id="tomorrowSubjects"
+            class="tomorrow">
+          </div>
+
+
+          <p class="muted">
+            Проверь эти предметы сегодня
+            и собери портфель заранее.
+          </p>
+
+
+          <button
+            class="secondary"
+            onclick="showTab('schedule')">
+
+            Изменить расписание
+
+          </button>
+
+        </div>
+
+
+      </div>
+
+
+
+      <!-- ДЕЙСТВИЯ -->
+
+      <div class="action-grid">
+
+
+        <div
+          class="action-tile"
+          onclick="openHomeworkModal()">
+
+          <span class="action-arrow">
+            →
+          </span>
+
+          <div class="action-icon">
+            📚
+          </div>
+
+          <h3>
+            Добавить ДЗ
+          </h3>
+
+          <p>
+            Добавь новое домашнее задание.
+          </p>
+
+        </div>
+
+
+        <div
+          class="action-tile"
+          onclick="showTab('checker')">
+
+          <span class="action-arrow">
+            →
+          </span>
+
+          <div class="action-icon">
+            📷
+          </div>
+
+          <h3>
+            Проверить ДЗ
+          </h3>
+
+          <p>
+            Загрузи фотографию
+            выполненной работы.
+          </p>
+
+        </div>
+
+
+      </div>
+
+
+
+      <!-- БЛИЖАЙШАЯ ДОМАШКА -->
+
+      <div
+        class="card"
+        style="margin-top:20px">
+
+        <div class="row">
+
+          <h3>
+            Домашка на ближайшие дни
+          </h3>
+
+          <button
+            class="secondary"
+            onclick="showTab('homework')">
+
+            Открыть всё
+
+          </button>
+
+        </div>
+
+
+        <div
+          id="homePreview">
+        </div>
+
+      </div>
+
+
+
+      <!-- НАГРАДЫ -->
+
+      <div class="card record-card">
+
+        <h3>
+          ⭐ Твои награды
+        </h3>
+
+
+        <div
+          class="record-number"
+          id="starsNumber">
+
+          0 ⭐
+
+        </div>
+
+
+        <div class="muted">
+
+          +2 ⭐ за каждое ДЗ,
+          которое сделано,
+          прикреплено к предмету
+          и проверено ИИ
+
+        </div>
+
+
+        <div
+          class="record-number"
+          id="cupsNumber"
+          style="margin-top:14px">
+
+          0 🏆
+
+        </div>
+
+
+        <div class="muted">
+
+          +10 🏆 отдельно,
+          если выполнены все ДЗ
+          на следующий день
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ИГРЫ -->
+
+      <div
+        class="wide-card"
+        onclick="openGames()">
+
+        <div class="wide-icon">
+          🎮
+        </div>
+
+        <div>
+
+          <h3>
+            Каталог игр
+          </h3>
+
+          <p class="muted">
+            Каждая игра стоит 10 ⭐
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ФИЛЬМЫ -->
+
+      <div
+        class="wide-card"
+        onclick="openMovies()">
+
+        <div class="wide-icon">
+          🎬
+        </div>
+
+        <div>
+
+          <h3>
+            Каталог фильмов и мультфильмов
+          </h3>
+
+          <p class="muted">
+            Каждый фильм или мультфильм —
+            15 🏆
+          </p>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- РАСПИСАНИЕ -->
+
+    <section
+      id="schedule
